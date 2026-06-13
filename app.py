@@ -15,7 +15,7 @@ from sklearn.compose import ColumnTransformer
 from sklearn.pipeline import Pipeline
 from sklearn.metrics import accuracy_score, precision_score, recall_score, f1_score, roc_auc_score
 
-# ---- GABUNGAN MODEL LENGKAP DARI CODINGAN DOSEN ----
+# ---- GABUNGAN MODEL LENGKAP ----
 from sklearn.linear_model import LogisticRegression, SGDClassifier, RidgeClassifier, PassiveAggressiveClassifier
 from sklearn.naive_bayes import GaussianNB, MultinomialNB, BernoulliNB, ComplementNB
 from sklearn.svm import SVC, LinearSVC, NuSVC
@@ -37,7 +37,7 @@ from catboost import CatBoostClassifier
 # CONFIG & LOAD DATASET
 # ==========================================
 st.set_page_config(page_title="Automated ML Benchmarking", layout="wide")
-st.title("💳 Automated ML Benchmarking Dashboard (Full Dosen Style)")
+st.title("💳 Automated ML Benchmarking Dashboard")
 st.write("Eksperimen komparasi model skala besar menggunakan arsitektur Pipeline, penanganan error otomatis, dan metrik ROC-AUC.")
 
 # Folder untuk menyimpan model pickle
@@ -58,7 +58,7 @@ try:
         [
             "1. Eksplorasi Data",
             "2. Definisi Fitur & Pipeline",
-            "3. Benchmarking Akhir (Fungsi Dosen)",
+            "3. Benchmarking Akhir",
             "4. Simpan & Load Model (Pickle)"
         ]
     )
@@ -218,7 +218,7 @@ pipeline = Pipeline(steps=[
     # ==========================================
     # --- MENU 3: BENCHMARKING AKHIR ---
     # ==========================================
-    elif menu == "3. Benchmarking Akhir (Fungsi Dosen)":
+    elif menu == "3. Benchmarking Akhir":
         st.sidebar.write("---")
         st.sidebar.header("🎛️ Konfigurasi Model & Partisi")
         test_size = st.sidebar.slider("Ukuran Data Test (%)", 10, 50, 20, step=5) / 100
@@ -362,7 +362,7 @@ pipeline = Pipeline(steps=[
                 results_df.insert(0, 'Rank', results_df.index + 1)
 
                 st.write("---")
-                st.subheader("📋 Leaderboard Hasil Berdasarkan Urutan ROC-AUC Dosen")
+                st.subheader("📋 Leaderboard Hasil Berdasarkan Urutan ROC-AUC")
 
                 df_display = results_df.copy()
                 for col in ['Accuracy', 'Precision', 'Recall', 'F1-Score', 'ROC-AUC']:
@@ -374,7 +374,7 @@ pipeline = Pipeline(steps=[
                 skor_auc = results_df.iloc[0]['ROC-AUC']
 
                 if not pd.isna(skor_auc):
-                    st.success(f"🏆 Model Terbaik menurut standar dosen adalah **{pemenang}** dengan skor **ROC-AUC: {skor_auc*100:.2f}%**.")
+                    st.success(f"🏆 Model Terbaik menurut standar adalah **{pemenang}** dengan skor **ROC-AUC: {skor_auc*100:.2f}%**.")
 
                     # ---- SIMPAN MODEL TERBAIK ----
                     if simpan_terbaik and pemenang in trained_pipelines:
